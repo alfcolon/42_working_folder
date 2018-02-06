@@ -1,6 +1,11 @@
 #include <stdio.h>
 #include <unistd.h>
-void	ft_build_rows(int start, int end)
+void	ft_putchar(char c)
+{
+	write(1, &c, 1);
+}
+
+void	ft_build_row(int start, int end)
 {
 	int	i;
 	
@@ -17,15 +22,14 @@ void	ft_build_rows(int start, int end)
 		}
 		else if (i == end)
 		{
-			ft_putchar('\');
-		}
-		else if (i == end + 1)
-		{
+			ft_putchar('\\');
 			ft_putchar('\n');
 		}
-		ft_putchar(' ');
+		else
+			ft_putchar(' ');
 		i++;
 	}
+}
 
 void	ft_sastanua(int stack_size, int basewidth)
 {
@@ -39,7 +43,7 @@ void	ft_sastanua(int stack_size, int basewidth)
 	stack = 1;
 	row = 1;
 	rows = 3;
-	start = basewidth / 2;
+	start = (basewidth / 2) + 1;
 	end = start + 2;
 	while (stack <= stack_size)
 	{
@@ -49,19 +53,26 @@ void	ft_sastanua(int stack_size, int basewidth)
 			{
 				ft_build_row(start, end);
 				stack++;
-				rows = (rows * 2) + 1;
-				start -= 3;
-				end += 3;
-			}
-			else if ((row == rows) && (stack + 1 > stack_size)
+				row -= row;
+				rows += 1;
+				start -= 2;
+				end += 2;
+			}	
+			else if ((row == rows) && (stack == stack_size))
 			{
 				ft_build_row(start, end);
 				break;
 			}
-			ft_build_row(start, end);
-			row++;
-			start--;
-			end++;
+			else
+				ft_build_row(start, end);
+				start--;
+				end++;
+				row++;
+	
+		}
+		if ((row == rows) && (stack + 1 > stack_size))
+		{
+			break;
 		}
 	}
 }
