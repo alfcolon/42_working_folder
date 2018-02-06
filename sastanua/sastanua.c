@@ -43,7 +43,7 @@ void	ft_sastanua(int stack_size, int basewidth)
 	stack = 1;
 	row = 1;
 	rows = 3;
-	start = (basewidth / 2) + 1;
+	start = (basewidth / 2) + stack_size - 2;
 	end = start + 2;
 	while (stack <= stack_size)
 	{
