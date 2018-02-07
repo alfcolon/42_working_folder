@@ -43,7 +43,7 @@ void	ft_sastanua(int stack_size, int basewidth)
 	stack = 1;
 	row = 1;
 	rows = 3;
-	start = (basewidth / 2) + stack_size - 2;
+	start = ((basewidth / 2) - 1) + stack_size - 1;
 	end = start + 2;
 	while (stack <= stack_size)
 	{
@@ -55,8 +55,8 @@ void	ft_sastanua(int stack_size, int basewidth)
 				stack++;
 				row -= row;
 				rows += 1;
-				start -= 2;
-				end += 2;
+				start -= (6 + (((stack-1)/2) * 2))/2;
+				end += (6 + (((stack-1)/2) * 2))/2;
 			}	
 			else if ((row == rows) && (stack == stack_size))
 			{
@@ -81,24 +81,26 @@ int	ft_find_basewidth(int stack_size)
 	int	stack_rows;
 	int	rows;
 	int	basewidth;
+	int	stack;
 	
 	stack_rows = 3;
 	rows = 3;
 	basewidth = 0;
-	
+	stack = 1;
 	while (stack_size > 0)
 	{
 		if (basewidth == 0)
 		{
-			basewidth = 3;
+			basewidth += 3;
 			rows--;
 		}
 		else if ((rows == 0) && ((stack_size - 1) > 0))
 		{
+			stack++;
 			stack_size--;
 			stack_rows++;
 			rows += stack_rows - 1;
-			basewidth += 4;
+			basewidth += (6 + (((stack-1)/2) * 2));
 		}
 		else if ((rows == 0) && ((stack_size - 1) == 0))
 		{
@@ -142,13 +144,12 @@ int	main(int argc, char *argv[])
 	int	stack_size;
 	int	basewidth;
 	
-	stack_size = ft_atoi(argv[1]);
-	basewidth = ft_find_basewidth(stack_size);
 	if (argc < 2)
 	{
-		write (2, "Error, stack count needed.", 26);
 		return (0);
 	}
+	stack_size = ft_atoi(argv[1]);
+	basewidth = ft_find_basewidth(stack_size);
 	printf("stacksize is: %d, basewidth is:%d\n", stack_size, basewidth);
 	ft_sastanua(stack_size, basewidth);
 	return (0);
