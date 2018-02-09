@@ -1,5 +1,13 @@
 #include <stdio.h>
 #include <unistd.h>
+/*For door, need to refactor/organize code. 
+	1) FT_SASTANUA 
+		A. Should take in a size from MAIN and pass values for START,END,ROW_COUNT AND BASE_WIDTH to a FT_BUILD function
+	2) FT_BUILD
+		A. Will update ROW, START, and END value as it call to FT_BUILD_ROWS AND FT_BUILD_DOOR
+*/
+
+
 void	ft_putchar(char c)
 {
 	write(1, &c, 1);
@@ -82,7 +90,9 @@ int	ft_find_basewidth(int stack_size)
 	int	rows;
 	int	basewidth;
 	int	stack;
+	int	row;//a lazy way of counting rows
 	
+	row = 3;
 	stack_rows = 3;
 	rows = 3;
 	basewidth = 0;
@@ -93,6 +103,7 @@ int	ft_find_basewidth(int stack_size)
 		{
 			basewidth += 3;
 			rows--;
+			row++;
 		}
 		else if ((rows == 0) && ((stack_size - 1) > 0))
 		{
@@ -100,6 +111,7 @@ int	ft_find_basewidth(int stack_size)
 			stack_size--;
 			stack_rows++;
 			rows += stack_rows - 1;
+			
 			basewidth += (6 + (((stack-1)/2) * 2));
 		}
 		else if ((rows == 0) && ((stack_size - 1) == 0))
