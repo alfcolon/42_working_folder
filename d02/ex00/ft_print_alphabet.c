@@ -1,3 +1,4 @@
+void	ft_putchar(char c);
 void	ft_print_alphabet(void)
 {
 	char a;
@@ -8,4 +9,3 @@ void	ft_print_alphabet(void)
 		ft_putchar(a++);
 	}
 }
-
