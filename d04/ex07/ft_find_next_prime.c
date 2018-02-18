@@ -1,5 +1,4 @@
-#include "stdio.h"
-int		ft_next_prime_is(char sieve[100001], int nb)
+int	ft_next_prime_is(char sieve[100001], int nb)
 {	
 	while (++nb < 100001)
 	{
@@ -8,12 +7,12 @@ int		ft_next_prime_is(char sieve[100001], int nb)
 	}
 	return (1);
 }
-int		ft_find_next_prime(int nb)
+int	ft_find_next_prime(int nb)
 {
 	char	sieve[100001];
-	int		i;
-	int		j;
-	int		k;
+	int	i;
+	int	j;
+	int	k;
 
 	k = 0;
 	while (k < 100001)
@@ -32,12 +31,5 @@ int		ft_find_next_prime(int nb)
 		}
 		i++;
 	}
-	printf("answer = %d\n", ft_next_prime_is(sieve, nb));
 	return (ft_next_prime_is(sieve, nb));
-}
-
-int	main(void) 
-{
-	printf("prime number is %d\n", ft_find_next_prime(47000));
-	return 0;
 }

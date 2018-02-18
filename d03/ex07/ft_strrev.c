@@ -26,6 +26,5 @@ char *ft_strrev(char *str)
 		i++;
 		len--;
 	}
-	printf("str %s\n", str);
 	return(str);
 }	

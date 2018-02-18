@@ -1,7 +1,7 @@
-int		ft_find_sqroot(int nb, int left_limit, int mid, int right_limit)
+int	ft_find_sqroot(int nb, int left_limit, int mid, int right_limit)
 {
-	int		mid_sqrd;
-	int		left_sqrd;
+	int	mid_sqrd;
+	int	left_sqrd;
 	
 	mid_sqrd = mid * mid;	
 	while (mid_sqrd > nb)
@@ -21,12 +21,12 @@ int		ft_find_sqroot(int nb, int left_limit, int mid, int right_limit)
 	}
 	return (0);
 }
-int		ft_sqrt(int nb)
+int	ft_sqrt(int nb)
 {
-	int		left_limit;
-	int		right_limit;
-	int 		mid;
-	int		sqroot;
+	int	left_limit;
+	int	right_limit;
+	int 	mid;
+	int	sqroot;
 	
 	if ((nb < 3) || (nb > 2147483647))
 	{
@@ -44,9 +44,4 @@ int		ft_sqrt(int nb)
 	mid = (right_limit - left_limit) / 2;
 	sqroot = ft_find_sqroot(nb, left_limit, mid, right_limit);
 	return (sqroot);
-}
-int	main()
-{
-	ft_sqrt(4);
-	return (0);
 }

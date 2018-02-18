@@ -1,7 +1,7 @@
-int		ft_is_prime(int nb)
+int	ft_is_prime(int nb)
 {
-	int		i;
-	int		prime;
+	int	i;
+	int	prime;
 	
 	if (nb < 2)
 	{

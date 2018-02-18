@@ -10,10 +10,11 @@ int	ft_iterative_power(int nb, int power)
 	{
 		return (1);
 	}
-	total = nb;
-	while (nb > 0)
+	total = 1;
+	while (power >= 1)
 	{
-		total *= nb--;
+		total *= nb;
+		power--;
 	}
 	return (total);
 }
