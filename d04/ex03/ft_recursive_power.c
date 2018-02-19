@@ -1,4 +1,4 @@
-int	ft_recursive_factorial(int nb, int power)
+int	ft_recursive_power(int nb, int power)
 {
 	if (nb <= 0)
 	{
@@ -8,5 +8,5 @@ int	ft_recursive_factorial(int nb, int power)
 	{
 		return (1);
 	}
-	return (nb * ft_recursive_factorial(int nb, int power - 1));
+	return (nb * ft_recursive_power(nb, power - 1));
 }		
