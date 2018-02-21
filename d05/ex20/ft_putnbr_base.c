@@ -1,12 +1,17 @@
 #include <stdio.h>
-char    const octal[9] = {'0','1','2','3','4','5','6','7'};
+char    const octals[9] = {'0','1','2','3','4','5','6','7'};
 char    const binary[3] = {'0','1'};
 char    const base10[11] = {'0','1','2','3','4','5','6','7','8','9'};
 char    const base16[17] = {'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
-int     ft_lsearch(char key, char *base, int size)
+int     ft_lsearch(char key, char const *base, int size)
 {
     int     i;
 
+    if (size == 16)
+    {
+        if ((key >= 'a') && (key <= 'z'))
+            key -= 32;
+    }
     i = 0;
     while (i < size)
     {
@@ -19,12 +24,12 @@ int     ft_lsearch(char key, char *base, int size)
 int     ft_is_base(char *base, int size)
 {
     int     i;
-    char    *basesys;
+    char    const *basesys;
 
     if (size == 2)
         basesys = binary;
     else if (size == 8)
-        basesys = octal;
+        basesys = octals;
     else if (size == 10)
         basesys = base10;
     else if (size == 16)
@@ -64,8 +69,8 @@ void    ft_putnbr_base(int nbr, char *base)
 }
 int     main()
 {
-    char    base[9] = {'0','1','2','3','4','5','6','7'};
-    ft_putnbr_base(44, octal);
+    char    base[17] = {'0','1','2','3','4','5','6','7','8','9','a','B','C','d','E','F'};
+    ft_putnbr_base(44, base);
 
     return 0;
 }
