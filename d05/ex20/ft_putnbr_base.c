@@ -14,7 +14,7 @@ int     ft_lsearch(char key, char *base, int size)
             return (1);
         i++;
     }
-    return (base);
+    return (0);
 }
 int     ft_is_base(char *base, int size)
 {
@@ -22,13 +22,13 @@ int     ft_is_base(char *base, int size)
     char    *basesys;
 
     if (size == 2)
-        *basesys = *binary;
+        basesys = binary;
     else if (size == 8)
         basesys = octal;
     else if (size == 10)
-        *basesys = *base10;
+        basesys = base10;
     else if (size == 16)
-        *basesys = *base16;
+        basesys = base16;
     else
         return (0);
 
@@ -60,11 +60,11 @@ void    ft_putnbr_base(int nbr, char *base)
     if (ft_is_base(base, len))
     {
         printf("it works: base:%s\nnbr:%d\n", base, nbr);
-
+    }
 }
 int     main()
 {
-    char    *octal = "poneyvif";
+    char    *base = "poneyvif";
     ft_putnbr_base(44, octal);
 
     return 0;
