@@ -1,5 +1,5 @@
 #include <stdio.h>
-char    const octal[9] = {'p','o','n','e','y','v','i','f'};
+char    const octal[9] = {'0','1','2','3','4','5','6','7'};
 char    const binary[3] = {'0','1'};
 char    const base10[11] = {'0','1','2','3','4','5','6','7','8','9'};
 char    const base16[17] = {'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
@@ -64,7 +64,7 @@ void    ft_putnbr_base(int nbr, char *base)
 }
 int     main()
 {
-    char    *base = "poneyvif";
+    char    base[9] = {'0','1','2','3','4','5','6','7'};
     ft_putnbr_base(44, octal);
 
     return 0;
