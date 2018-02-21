@@ -1,8 +1,8 @@
 #include <stdio.h>
-char    octal[9] = {'p','o','n','e','y','v','i','f'};
-char    binary[3] = {'0','1'};
-char    base10[11] = {'0','1','2','3','4','5','6','7','8','9'};
-char    base16[17] = {'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
+char    const octal[9] = {'p','o','n','e','y','v','i','f'};
+char    const binary[3] = {'0','1'};
+char    const base10[11] = {'0','1','2','3','4','5','6','7','8','9'};
+char    const base16[17] = {'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
 int     ft_lsearch(char key, char *base, int size)
 {
     int     i;
@@ -14,18 +14,28 @@ int     ft_lsearch(char key, char *base, int size)
             return (1);
         i++;
     }
-    return (0);
+    return (base);
 }
 int     ft_is_base(char *base, int size)
 {
     int     i;
-    char     *basesys;
-    
-    
+    char    *basesys;
+
+    if (size == 2)
+        *basesys = *binary;
+    else if (size == 8)
+        basesys = octal;
+    else if (size == 10)
+        *basesys = *base10;
+    else if (size == 16)
+        *basesys = *base16;
+    else
+        return (0);
+
     i = 0;
-    while(i < size)
+    while (i < size)
     {
-        if ((size == 8) && (!(ft_lsearch(base[i], octal, size))))
+        if (!(ft_lsearch(base[i], basesys, size)))
             return (0);
         i++;
     }
@@ -33,7 +43,7 @@ int     ft_is_base(char *base, int size)
 }
 int	    ft_strlen(char *str)
 {
-    int	len;
+    int	    len;
 
     len = 0;
     while (str[len])
@@ -47,13 +57,10 @@ void    ft_putnbr_base(int nbr, char *base)
     int     len;
 
     len = ft_strlen(base);
-    if ((len == 2) || (len == 8) || (len == 10) || (len == 16))
+    if (ft_is_base(base, len))
     {
-        if (ft_is_base(base, len))
-        {
-            printf("it works: base:%s\nnbr:%d\n", base, nbr);
-        }
-    }
+        printf("it works: base:%s\nnbr:%d\n", base, nbr);
+
 }
 int     main()
 {
