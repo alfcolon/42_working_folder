@@ -10,11 +10,19 @@ void    ft_putchar(char c)
 }
 void     ft_convert_base(int nbr, int base)
 {
+    char    numarr[50];
+    int     count;
 
+    count = 0;
     while (nbr > 0)
     {
-        ft_putchar(base16[nbr % base]);
+        numarr[count] = base16[nbr % base];
         nbr /= base;
+        count++;
+    }
+    while (--count >= 0)
+    {
+        ft_putchar(numarr[count]);
     }
 }
 
