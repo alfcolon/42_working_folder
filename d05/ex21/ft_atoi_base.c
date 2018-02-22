@@ -5,19 +5,19 @@ char    const octals[9] = {'0','1','2','3','4','5','6','7'};
 char    const base10[11] = {'0','1','2','3','4','5','6','7','8','9'};
 char    const base16[17] = {'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
 
-int     ft_get_nbr(char nbr, int start, int end, int base)
-{
-    int     sign;
-
-    sign = 1;
-    if (nbr[start - 1] == '-')
-        sign *= -1;
-    while (nbr > 0)
-    {
-        nbr /= base;
-    }
-    //DIFFERENT CASES FOR DIFF BASE SYSTEM CONVERSIONS, OY
-}
+//int     ft_get_nbr(char nbr, int start, int end, int base)
+//{
+//    int     sign;
+//
+//    sign = 1;
+//    if (nbr[start - 1] == '-')
+//        sign *= -1;
+//    while (nbr > 0)
+//    {
+//        nbr /= base;
+//    }
+//    //DIFFERENT CASES FOR DIFF BASE SYSTEM CONVERSIONS, OY
+//}
 int	    ft_strlen(char *str)
 {
     int	    len;
