@@ -1,23 +1,94 @@
-#include <stdio.h>
-#include <unistd.h>
-char    const binary[3] = {'0','1'};
-char    const octals[9] = {'0','1','2','3','4','5','6','7'};
-char    const base10[11] = {'0','1','2','3','4','5','6','7','8','9'};
-char    const base16[17] = {'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
 
-//int     ft_get_nbr(char nbr, int start, int end, int base)
-//{
-//    int     sign;
-//
-//    sign = 1;
-//    if (nbr[start - 1] == '-')
-//        sign *= -1;
-//    while (nbr > 0)
-//    {
-//        nbr /= base;
-//    }
-//    //DIFFERENT CASES FOR DIFF BASE SYSTEM CONVERSIONS, OY
-//}
+//LWCASE STRINGS
+int     i;
+int     j;
+
+int	ft_iterative_power(int nb, int power)
+{
+    int		total;
+
+    if (nb <= 0)
+        return (0);
+    else if (power == 0)
+        return (1);
+    total = 1;
+    while (power > 0)
+    {
+        total *= nb;
+        power--;
+    }
+    return (total);
+}
+int     ft_base10(char *str, int base, int size)
+{
+    int 	total;
+    int 	sign;
+    int 	power;
+    int 	num;
+    int 	l;
+
+    l = 0;
+    total = 0;
+    sign = 1;
+    power = 0;
+    if (str[0] == '-')
+    {
+        sign *= -1;
+        ++l;
+    }
+    while (size >= l)
+    {
+        if (str[size] > '9')
+            num = (str[size] - 'a') + 10;
+        else
+            num = (str[size] - '0');
+        total += num * ft_iterative_power(base, power);
+        power++;
+        size--;
+    }
+    return (total * sign);
+}
+int     ft_isdecimal(char c)
+{
+    if ((c >= '0') && (c <= '1'))
+        return (2);
+    if ((c >= '2') && (c <= '7'))
+        return (8);
+    if ((c >= '8') && (c <= '9'))
+        return (10);
+    if ((c >= 'a') && (c <= 'f'))
+        return (16);
+    if ((c >= 'A') && (c <= 'F'))
+        return (16);
+    return (0);
+}
+int	    ft_get_atoi_base(char *str)
+{
+    int     base;
+    int     base_n;
+    int     k;
+
+    base = 0;
+    k = 0;
+    while (((str[k] >= 9) && (str[k] <= 13)) || (str[k] == 32))
+    {
+        k++;
+    }
+    i = k;
+    if ((str[k] == '-') || (str[k] == '+'))
+    {
+        k++;
+    }
+    base_n = ft_isdecimal(str[k]);
+    while (str[k] != '\0')
+    {
+        if (base < base_n)
+            base = base_n;
+        base_n = ft_isdecimal(str[++k]);
+    }
+    j = k;
+    return base;
+}
 int	    ft_strlen(char *str)
 {
     int	    len;
@@ -27,155 +98,83 @@ int	    ft_strlen(char *str)
     {
         len++;
     }
-    if (len <= 1)
-        return (0);
     return (len);
 }
-int     ft_dupes(char *str)
+int     ft_valid_char(char *str)
 {
+    char    valid_chars[17] = {'0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f'};
     int     i;
     int     j;
 
     i = 0;
-    while (str[i])
+    while (str[i] != '\0')
     {
-        j = i + 1;
-        while (str[j] < '\0')
+        j = 0;
+        while (valid_chars[j])
         {
-            if (str[i] == str[j])
+            if (str[i] == valid_chars[j])
+                break;
+            if ((j == 15) && (str[i] != valid_chars[j]))
                 return (0);
             j++;
         }
         i++;
     }
-    return (1);
 }
-int     ft_is_hexa(char *base)
+int     ft_dupes(char *str)
 {
-    int     i;
+    int     k;
+    int     l;
 
-    i = 0;
-    while (base[i])
+    k = 0;
+    while (str[k])
     {
-        if ((base[i] >= 'a') && (base[i] <= 'f'))
-                return (1);
-        else if ((base[i] >= 'A') && (base[i] <= 'F'))
-            return (1);
-        i++;
-    }
-    return (0);
-}
-int     ft_is_base10(char *base)
-{
-    int     i;
-
-    i = 0;
-    while (base[i])
-    {
-        if ((base[i] >= '8') && (base[i] <= '9'))
-            return (1);
-        i++;
-    }
-    return (0);
-}
-int     ft_is_octal(char *base)
-{
-    int     i;
-
-    i = 0;
-    while (base[i])
-    {
-        if ((base[i] >= '2') && (base[i] <= '7'))
-            return (1);
-        i++;
-    }
-    return (0);
-}
-int     ft_is_binary(char *base)
-{
-    int     i;
-
-    i = 0;
-    while (base[i])
-    {
-        if ((base[i] < '0') || (base[i] > '1'))
-            return (0);
-        i++;
+        l = k + 1;
+        while (str[j])
+        {
+            if (str[k] == str[l])
+                return (0);
+            l++;
+        }
+        k++;
     }
     return (1);
 }
-//have to edit for that 0a => 0 case
-int     ft_get_base(char *base)
+int	ft_atoi_base10(char *dest, char *src, int str_base)
 {
-    int     i;
+    int     start;
+    int     k;
+    int     atoi;
+    int     size;
 
-    if (ft_is_hexa(base))
-        return (16);
-    else if (ft_is_base10(base))
-        return (10);
-    else if (ft_is_octal(base))
-        return (8);
-    else if (ft_is_binary(base))
-        return (2);
-    return (0);
-}
-int	    ft_atoi_base_start(char *str)
-{
-    int     i;
-
-    i = 0;
-    while ((str[i] >= 9 && str[i] <= 16) || str[i] == 32)
+    k = 0;
+    start = i;
+    while(start < j)
     {
-        i++;
+        dest[k] = src[start];
+        k++;
+        start++;
     }
-    if ((str[i] == '-') || (str[i] == '+'))
-    {
-        i++;
-    }
-    if (((str[i] >= 'A') && (str[i] <= 'F')) || ((str[i] >= 'a') && (str[i] <= 'f')))
-        return (i);
-    else if ((str[i] >= '0') && (str[i] <= '9'))
-        return (i);
-    else
-        return (-1);
-}
-int	    ft_atoi_base_end(char *str, int start, int base)
-{
-    int     end;
-
-    end = start;
-    while (str[end])
-    {
-        if ((str[end] >= '0') && (str[end] <= '9'))
-            end++;
-        else if ((str[end] >= 'a') && (str[end] <= 'f'))
-            end++;
-        else if ((str[end] >= 'A') && (str[end] <= 'F'))
-            end++;
-    }
-    return (end);
+    dest[k] = '\0';
+    size = ft_strlen(dest);
+    atoi = ft_base10(dest, str_base, --size);
+    return (atoi);
 }
 int     ft_atoi_base(char *str, char *base)
 {
-    int     start;
-    int     end;
-    int     nb;
-    int     valid_base;
+    char    temp[50];
+    int     base_base;
+    int     str_base;
+    int     str_atoi;
+    int     len;
 
-    valid_base  = ft_get_base(base);
-    if ((!(ft_strlen(base)) || !(ft_dupes(base)) || !(valid_base)))
+    base_base  = ft_get_atoi_base(base);
+    len = ft_strlen(base);
+    if ((len < 2) || !(ft_dupes(base)) || !(base_base) || !(ft_valid_char(base)))
         return (0);
-    start = ft_atoi_base_start(str);
-    end = ft_atoi_base_end(str, start, valid_base);
-    printf("str: %s\nbase: %s\nstart: %d\nend: %d\nvalidbase: %d\n", str, base, start, end, valid_base);
-//DIFFERENT CASES FOR DIFF BASE SYSTEM CONVERSIONS, OY
-//    if ((start > -1) && (end > -1))
-//        nb = ft_get_nbr(str, start, end, valid_base);
-    return (nb);
-}
-int     main()
-{
-    char    base[17] = {'0','1','2','3','4','5','6','7','8','9','A','b','c','d','e','f'};
-    ft_atoi_base("_3f_", base);
-    return 0;
+    str_base = ft_get_atoi_base(str);
+    if (str_base < base_base)
+        str_base = base_base;
+    str_atoi = ft_atoi_base10(temp, str, str_base);
+    return (str_atoi);
 }
