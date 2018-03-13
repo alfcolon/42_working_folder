@@ -120,8 +120,9 @@ void    *ft_get_word_position(int *wordarr, int len, char *str, char *delim)
     wordarr[0] = count;
     wordarr[1] = totalcount;
 }
-char    **ft_split(char *str, char *delim)
+char    **ft_split(char *str)
 {
+    char    *delim = " ";
     int     *wordarr = (int *)malloc(sizeof(wordarr) * 100);
     char    **splitwords;
     int     len;
