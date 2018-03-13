@@ -38,7 +38,6 @@ void    ft_print_door_end(int start, int end)
     i = start;
     while (i <= end)
     {
-//        printf("end:%d\n", i);
         if (i == end)
         {
             ft_putchar('\\');
@@ -111,9 +110,6 @@ void    ft_build_door(int total_stacks, int start, int end)
     door_height = ft_door_height(((total_stacks - 1) / 2));
     door_start = end - ((end - start)  / 2) - (door_height / 2);
     door_end = door_start + door_height - 1;
-//    door_start = (((end - start) / 2)  - (door_height / 2);
-//    door_end = (((end + 2) - start) / 2)  + (door_height / 2);
-//    printf("end:%d\n", end);
     i = 0;
     while (i < door_height)
     {
@@ -151,12 +147,10 @@ void    ft_buildrow(int total_stacks, int basewidth)
     {
         row = 0;
         total_rows = 3 + (stack);
-//        printf("totalrows:%d\n",total_rows);
         while (row < total_rows)
         {
             if ((stack == total_stacks - 1) && (row == (total_rows - (ft_door_height((total_stacks - 1) / 2)))))
             {
-//                printf("row:%d\n",row);
                 ft_build_door(total_stacks, start, end);
                 break;
             }
@@ -184,7 +178,6 @@ int     ft_find_basewidth(int stack_size)
         first_row = basewidth + ((3 + (stack/2)) * 2);
         row_count = 3 + stack;
         basewidth = first_row + (2 * (row_count - 1));
-        printf("firstrow:%d\t\t\tstack:%d\t\t\tbasewidth:%d\n",first_row,stack,basewidth);
         stack++;
     }
     return (basewidth);
