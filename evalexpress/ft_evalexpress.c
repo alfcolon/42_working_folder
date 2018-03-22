@@ -48,7 +48,6 @@ int 	ft_precedence(char op, char last_op, int finaleval)
 		op_order = (0);
 	if (finaleval == 1 || op == ')' || last_op_order >= op_order)
 		return (1);
-
 	return (0);
 }
 int 	*ft_evaluate(char op, int finaleval)
@@ -63,20 +62,27 @@ int 	*ft_evaluate(char op, int finaleval)
 				break;
 			ft_solve(ops[--len]);
 			ops[len] = '\0';
-
 		}
 	if (op == ')' && ops[len - 1] == '(')
 		ops[--len] = '\0';
 	else if (op != ')')
 		ops[len++] = op; //(+
-	printf("op:%c\tops[0]:%c\tops:%s\tlen:%d\tvals[0]:%d\n\n", op, ops[0], ops, len, vals[0]);
-	return (ops);
+	printf("op:%c\tops[0]:%c\tops:%s\tlen:%d\tvals[0]:%d\tvals[1]:%d\n\n", op, ops[0], ops, len, vals[0],vals[1]);
+	return (vals[0]);
 }
 int 	ft_getoperand(char **str)
 {
 	int 	n;
 	int 	operand;
+	int 	sign;
 
+	sign = 1;
+	if (**str == '+' || **str == '-')
+	{
+		if (**str == '-')
+			sign *= -1;
+		++*str;
+	}
 	operand = 0;
 	while (**str >= '0' && **str <= '9')
 	{
@@ -84,7 +90,19 @@ int 	ft_getoperand(char **str)
 		operand = operand * 10 + n;
 		++*str;//shifts pointer passed in pointer to position after digit
 	}
-	return (operand);
+	return (operand * sign);
+}
+int 	ft_isdigit(char *exp)
+{
+	if (*exp == '-' || *exp == '+')
+		if (*(exp + 1) >= '0' && *(exp + 1) <= '9')
+			if (*(exp - 1) == '+' || *(exp - 1) == '*' || *(exp - 1) == '/' || *(exp - 1) == '-' || *(exp - 1) == '%')
+				return (1);
+			else if (*(exp - 1) == NULL)
+				return (1);
+	if (*exp >= '0' && *exp <= '9')
+		return (1);
+	return (0);
 }
 char 	*ft_strcpy(char *dest, char *src)
 {
@@ -113,7 +131,7 @@ int		*ft_evalexpress(char *str)
 	ft_strcpy(exp, str);
 	while (*exp)
 	{
-		if (*exp >= '0' && *exp <= '9')
+		if (ft_isdigit(exp))
 			vals[vals_len++] = ft_getoperand(&exp);
 		if (*exp == '+' || *exp == '*' || *exp == '/' || *exp == '-' || *exp == '%')
 			ft_evaluate(*exp, 0);
@@ -121,13 +139,12 @@ int		*ft_evalexpress(char *str)
 			ft_evaluate(*exp, 0);
 		exp++;
 	}
-
 	return (ft_evaluate(NULL, 1));//if null is passed in, the evaluate function will solve until len == 0
 }
 int main()
 {
-	ft_evalexpress("(2+2) + 5 + (1+1)");
-//	printf("%d,%d\n",vals[0], vals[1]);
+	int 	*answer = ft_evalexpress("+4+-2+5+(1+1)%-2");
+	printf("ANSWER IS:%d", answer);
 	return 0;
 }
 //have to create function to qualify string as an valid expression
